@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Product from '../components/Product.js';
 import Loader from '../components/Loader.js';
 import Message from '../components/Message.js';
-import { listProducts } from '../actions/productAction.js';
+import { listProducts } from '../actions/productActions.js';
 
 function HomeScreen() {
   const dispatch = useDispatch();
