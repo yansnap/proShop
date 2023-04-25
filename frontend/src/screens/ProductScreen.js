@@ -9,7 +9,7 @@ import {
   ListGroupItem,
 } from 'react-bootstrap';
 import Rating from '../components/Rating';
-import products from '../products';
+import { listProductDetails, createProductReview } from '../actions/productActions'
 import { Link, useParams } from 'react-router-dom';
 import axios from 'axios';
 
