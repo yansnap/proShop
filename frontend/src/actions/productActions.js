@@ -34,6 +34,7 @@ export const listProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
+    console.log(id)
     const { data } = await axios.get(`/api/product/${id}`);
 
     dispatch({

@@ -22,7 +22,6 @@ function ProductScreen({ match, history }) {
   const product_id = useParams();
   let navigate = useNavigate();
 
-
   const productDetails = useSelector((state) => state.productDetails);
   const dispatch = useDispatch();
   const { loading, error, product } = productDetails;
@@ -122,7 +121,7 @@ function ProductScreen({ match, history }) {
                       display: 'flex',
                       justifyContent: 'center',
                     }}
-                    disabled={product.countInStock == 0}
+                    disabled={product.countInStock === 0}
                     variant="primary"
                     type="button"
                   >
