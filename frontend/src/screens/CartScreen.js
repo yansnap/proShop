@@ -14,7 +14,7 @@ import {
 import Message from '../components/Message';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 
-function CartScreen({ match, history }) {
+function CartScreen() {
   let navigate = useNavigate();
   const productId = useParams();
   const location = useLocation();
@@ -27,7 +27,7 @@ function CartScreen({ match, history }) {
 
   useEffect(() => {
     if (productId) {
-      dispatch(addToCart(productId, qty));
+      dispatch(addToCart(productId.id, qty));
     }
   }, [dispatch, productId, qty]);
 
@@ -56,13 +56,12 @@ function CartScreen({ match, history }) {
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
                   <Col md={3}>
-                    <Link to={`/product/${item.product}`}>{item.name}</Link>
+                    <Link to={`/products/${item.product}`}>{item.name}</Link>
                   </Col>
 
                   <Col md={2}>${item.price}</Col>
 
-                  <Col md={3}>
-                    {/* MAKE THAT QUANTITY CAN BE CHANGE BY THIS PAGE */}
+                  <Col md={3}>           
                     <Form.Control
                       as="select"
                       value={item.qty}
@@ -77,7 +76,6 @@ function CartScreen({ match, history }) {
                           {x + 1}
                         </option>
                       ))}
-                      {/* MAKE THAT QUANTITY CAN BE CHANGE BY THIS PAGE */}
                     </Form.Control>
                   </Col>
                   <Col md={1}>
@@ -112,11 +110,7 @@ function CartScreen({ match, history }) {
             <ListGroupItem>
               <Button
                 type="button"
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                }}
+                className='w-100'
                 disabled={cartItems.length === 0}
                 onClick={checkoutHandler}
               >
