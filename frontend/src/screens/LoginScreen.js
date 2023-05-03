@@ -57,7 +57,7 @@ function LoginScreen() {
           ></Form.Control>
         </Form.Group>
 
-        <Button type="submit" variant="primary">
+        <Button type="submit" variant="primary" style={{marginTop: 25}}>
           Sign In
         </Button>
       </Form>
