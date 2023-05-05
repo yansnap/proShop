@@ -10,10 +10,11 @@ from rest_framework import status
 
 
 @api_view(['POST'])
-@permission_classes(['IsAuthenticated'])
+@permission_classes([IsAuthenticated])
 def addOrderItems(request):
     user = request.user
     data = request.data
+
     orderItems = data['orderItems']
 
     if orderItems and len(orderItems) == 0:
@@ -31,15 +32,16 @@ def addOrderItems(request):
         )
 
         # (2) Create shipping address
+
         shipping = ShippingAddress.objects.create(
             order=order,
             address=data['shippingAddress']['address'],
             city=data['shippingAddress']['city'],
             postalCode=data['shippingAddress']['postalCode'],
-            country=data['shippingAddress']['country']
+            country=data['shippingAddress']['country'],
         )
 
-        # (3) Create order items and set order to orderItem relationship
+        # (3) Create order items adn set order to orderItem relationship
         for i in orderItems:
             product = Product.objects.get(_id=i['product'])
 
@@ -50,12 +52,12 @@ def addOrderItems(request):
                 qty=i['qty'],
                 price=i['price'],
                 image=product.image.url,
-
             )
 
-        # (4) update stock
+            # (4) Update stock
+
             product.countInStock -= item.qty
             product.save()
-    serializer = OrderSerializer(order, many=True)
 
-    return Response(serializer.data)
+        serializer = OrderSerializer(order, many=False)
+        return Response(serializer.data)
