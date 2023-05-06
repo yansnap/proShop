@@ -59,7 +59,7 @@ def updateUserProfile(request):
 
     if data['password'] != '':
         user.password = make_password(data['password'])
-    
+
     user.save()
 
     return Response(serializer.data)
@@ -79,3 +79,11 @@ def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
     return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteUser(request, pk):
+    userForDeletion = User.objects.get(id=pk)
+    userForDeletion.delete()
+    return Response('User was deleted')
