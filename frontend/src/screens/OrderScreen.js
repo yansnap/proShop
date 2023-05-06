@@ -34,8 +34,6 @@ function OrderScreen() {
       .reduce((acc, item) => acc + item.price * item.qty, 0)
       .toFixed(2);
   }
-  //id
-  //
   const addPaypalScript = () => {
     const script = document.createElement('script');
     script.type = 'text/javascript';
@@ -47,8 +45,6 @@ function OrderScreen() {
     };
     document.body.appendChild(script);
   };
-  //secret
-  //EEKEyaAaYz2by1c3fYqbvQWWQhLcwAEi8cwo5U_tcv6NG2Qm5pB0QzJQ4PyrpqAerHAMGf0C26aXiOiY
   useEffect(() => {
     if (!order || successPay || order._id !== Number(orderId.id)) {
       dispatch({ type: ORDER_PAY_RESET });
