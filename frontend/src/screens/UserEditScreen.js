@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader.js';
 import Message from '../components/Message.js';
 import FormContainer from '../components/FormContainer.js';
-import { getUserDetails } from '../actions/userAction.js';
+import { getUserDetails, updateUser } from '../actions/userAction.js';
+import { USER_UPDATE_RESET } from '../constants/userConstants.js';
 
 function EditUserScreen() {
   const userId = useParams();
@@ -21,18 +22,31 @@ function EditUserScreen() {
   const userDetails = useSelector((state) => state.userDetails);
   const { error, loading, user } = userDetails;
 
+  const userUpdate = useSelector((state) => state.userUpdate);
+  const {
+    error: errorUpdate,
+    loading: loadingUpdate,
+    success: successUpdate,
+  } = userUpdate;
+
   useEffect(() => {
-    if (!user.name || user._id !== Number(userId.id)) {
-      dispatch(getUserDetails(userId.id));
+    if (successUpdate) {
+      dispatch({ type: USER_UPDATE_RESET });
+      navigate('/admin/userlist');
     } else {
-      setName(user.name);
-      setEmail(user.email);
-      setIsAdmin(user.isAdmin);
+      if (!user.name || user._id !== Number(userId.id)) {
+        dispatch(getUserDetails(userId.id));
+      } else {
+        setName(user.name);
+        setEmail(user.email);
+        setIsAdmin(user.isAdmin);
+      }
     }
-  }, [dispatch, user, userId]);
+  }, [dispatch, user, userId, navigate, successUpdate]);
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(updateUser({ _id: user._id, name, email, isAdmin }));
   };
 
   return (
@@ -40,6 +54,9 @@ function EditUserScreen() {
       <Link to="/admin/userlist">Go Back</Link>
       <FormContainer>
         <h1>Edit User</h1>
+        {loadingUpdate && <Loader />}
+        {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
+
         {loading ? (
           <Loader />
         ) : error ? (

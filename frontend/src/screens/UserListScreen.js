@@ -27,7 +27,7 @@ function UserListScreen() {
     } else {
       navigate('/login');
     }
-  }, [dispatch, navigate, successDelete]);
+  }, [dispatch, navigate, userInfo, successDelete]);
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure to delete user?')) {
