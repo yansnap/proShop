@@ -31,7 +31,7 @@ function OrderScreen() {
     if (!order || order._id !== Number(orderId.id)) {
       dispatch(getOrderDetails(orderId.id));
     }
-  }, [order, navigate, orderId]);
+  }, [order, dispatch, orderId]);
 
   return loading ? (
     <Loader />
@@ -63,11 +63,12 @@ function OrderScreen() {
               </p>
 
               {order.isDelivered ? (
-                <Message variant="success">Delivered on {order.deliveredAt}</Message>
+                <Message variant="success">
+                  Delivered on {order.deliveredAt}
+                </Message>
               ) : (
                 <Message variant="warning">Not Delivered</Message>
               )}
-
             </ListGroup.Item>
 
             <ListGroup.Item>
