@@ -5,8 +5,7 @@ import { Button, Table, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../components/Loader.js';
 import Message from '../components/Message.js';
-import { listUsers, deleteUser } from '../actions/userAction.js';
-import { listProducts } from '../actions/productActions.js';
+import { listProducts, deleteProduct } from '../actions/productActions.js';
 
 function UserListScreen() {
   let navigate = useNavigate();
@@ -15,6 +14,13 @@ function UserListScreen() {
 
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+
+  const productDelete = useSelector((state) => state.productDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = productDelete;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -25,11 +31,11 @@ function UserListScreen() {
     } else {
       navigate('/login');
     }
-  }, [dispatch, navigate, userInfo]);
+  }, [dispatch, navigate, userInfo, successDelete]);
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure to delete this product?')) {
-      //delete products
+      dispatch(deleteProduct(id));
     }
   };
 
@@ -49,6 +55,9 @@ function UserListScreen() {
           </Button>
         </Col>
       </Row>
+
+      {loadingDelete && <Loader />}
+      {errorDelete && <Message variant="danger">{error}</Message>}
 
       {loading ? (
         <Loader />
@@ -85,7 +94,7 @@ function UserListScreen() {
                   <Button
                     variant="danger"
                     className="btn-sm"
-                    onClick={() => deleteHandler([product]._id)}
+                    onClick={() => deleteHandler(product._id)}
                   >
                     <i className="fa fa-trash"></i>
                   </Button>
