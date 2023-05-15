@@ -8,7 +8,7 @@ import FormContainer from '../components/FormContainer.js';
 import { getUserDetails, updateUser } from '../actions/userAction.js';
 import { USER_UPDATE_RESET } from '../constants/userConstants.js';
 
-function EditUserScreen() {
+function UserEditScreen() {
   const userId = useParams();
 
   const [name, setName] = useState('');
@@ -102,4 +102,4 @@ function EditUserScreen() {
   );
 }
 
-export default EditUserScreen;
+export default UserEditScreen;
