@@ -28,8 +28,9 @@ import {
 export const listProducts = (keyword = '') => async (dispatch) => {
   try {
     dispatch({ type: PRODUCT_LIST_REQUEST });
+    keyword = `/?${keyword}`
 
-    const { data } = await axios.get(`/api/products/?keyword=${keyword}`);
+    const { data } = await axios.get(`/api/products${keyword}`);
 
     dispatch({
       type: PRODUCT_LIST_SUCCESS,

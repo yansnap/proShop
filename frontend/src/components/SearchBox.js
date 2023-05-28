@@ -4,18 +4,18 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 function SearchBox() {
   const [keyword, setKeyword] = useState('');
-  let navigate = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
 
   const submitHandler = (e) => {
     e.preventDefault();
     if (keyword) {
-      navigate(`/?keyword=${encodeURIComponent(keyword)}`);
+      navigate(`/?keyword=${keyword}&page=1`);
     } else {
       navigate(location.pathname);
     }
-    window.location.reload();
   };
+
   return (
     <Form onSubmit={submitHandler}>
       <Row className="align-items-center">
